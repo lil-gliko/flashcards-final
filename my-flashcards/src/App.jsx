@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-// --- רשימת המילים המלאה שלך ---
+// --- רשימת המילים המלאה שלך (776 מילים) ---
 const initialWords = [
   { "id": 1, "front": "ich", "back": "I" },
   { "id": 2, "front": "du", "back": "you (singular)" },
@@ -782,231 +782,99 @@ const initialWords = [
 
 // --- הגדרת עיצובים (Inline Styles) ---
 const styles = {
-  container: {
-    minHeight: '100vh',
-    backgroundColor: '#f3f4f6',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-    fontFamily: 'sans-serif',
-    direction: 'rtl'
-  },
-  header: {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    marginBottom: '24px',
-    color: '#2563eb'
-  },
-  dashboard: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-    width: '100%',
-    maxWidth: '400px',
-    textAlign: 'center'
-  },
-  statsBox: {
-    backgroundColor: 'white',
-    padding: '16px',
-    borderRadius: '12px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    marginBottom: '16px',
-    display: 'flex',
-    justifyContent: 'space-around',
-    fontWeight: 'bold'
-  },
+  container: { minHeight: '100vh', backgroundColor: '#f3f4f6', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px', fontFamily: 'sans-serif', direction: 'rtl' },
+  header: { fontSize: '2rem', fontWeight: 'bold', marginBottom: '24px', color: '#2563eb' },
+  dashboard: { display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', maxWidth: '400px', textAlign: 'center' },
+  statsBox: { backgroundColor: 'white', padding: '16px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', marginBottom: '16px', display: 'flex', justifyContent: 'space-around', fontWeight: 'bold', fontSize: '14px' },
   textGreen: { color: '#16a34a' },
   textRed: { color: '#ef4444' },
-  textGray: { color: '#6b7280' },
+  textOrange: { color: '#f59e0b' },
   
-  primaryButton: {
-    backgroundColor: '#3b82f6',
-    color: 'white',
-    padding: '12px',
-    borderRadius: '8px',
-    fontSize: '18px',
-    fontWeight: '500',
-    border: 'none',
-    cursor: 'pointer',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    transition: 'background-color 0.2s'
-  },
-  dangerButton: {
-    backgroundColor: '#ef4444',
-    color: 'white',
-    padding: '12px',
-    borderRadius: '8px',
-    fontSize: '18px',
-    fontWeight: '500',
-    border: '2px solid #b91c1c',
-    cursor: 'pointer',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    transition: 'background-color 0.2s'
-  },
-  resetLink: {
-    color: '#9ca3af',
-    fontSize: '14px',
-    marginTop: '32px',
-    textDecoration: 'underline',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer'
-  },
-  gameContainer: {
-    width: '100%',
-    maxWidth: '400px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
-  },
-  gameHeader: {
-    marginBottom: '16px',
-    color: '#4b5563',
-    fontWeight: '500'
-  },
-  card: {
-    position: 'relative',
-    width: '100%',
-    height: '250px',
-    cursor: 'pointer',
-    perspective: '1000px' // חובה לאפקט תלת מימד
-  },
-  cardInner: (isFlipped) => ({
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    textAlign: 'center',
-    transition: 'transform 0.6s',
-    transformStyle: 'preserve-3d',
-    transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-    borderRadius: '16px',
-    backgroundColor: 'white'
-  }),
-  cardFace: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backfaceVisibility: 'hidden', // מסתיר את הצד האחורי כשהוא הפוך
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '16px'
-  },
-  cardFaceBack: {
-    transform: 'rotateY(180deg)',
-    backgroundColor: '#f9fafb'
-  },
-  cardText: {
-    fontSize: '2.5rem', // text-4xl
-    fontWeight: 'bold',
-    color: '#1f2937'
-  },
-  cardSubtext: {
-    fontSize: '0.875rem', // text-sm
-    color: '#9ca3af',
-    textTransform: 'uppercase',
-    marginBottom: '8px'
-  },
-  hintText: {
-    fontSize: '0.875rem',
-    color: '#60a5fa',
-    marginTop: '8px'
-  },
-  controls: {
-    display: 'flex',
-    gap: '16px',
-    marginTop: '32px',
-    width: '100%'
-  },
-  controlButton: (type) => ({
-    flex: 1,
-    padding: '16px',
-    borderRadius: '12px',
-    fontWeight: 'bold',
-    fontSize: '1.125rem',
-    cursor: 'pointer',
-    border: type === 'know' ? '1px solid #22c55e' : '1px solid #ef4444',
-    backgroundColor: type === 'know' ? '#dcfce7' : '#fee2e2',
-    color: type === 'know' ? '#16a34a' : '#dc2626',
-    transition: 'background-color 0.2s'
-  }),
-  exitButton: {
-    marginTop: '24px',
-    color: '#6b7280',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    fontSize: '1rem'
-  }
+  // סגנונות לכפתורי התפריט
+  btnBase: { color: 'white', padding: '14px', borderRadius: '8px', fontSize: '18px', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', transition: 'background-color 0.2s', width: '100%' },
+  btnBlue: { backgroundColor: '#3b82f6' },
+  btnOrange: { backgroundColor: '#f59e0b' },
+  btnRed: { backgroundColor: '#ef4444' },
+  btnGreen: { backgroundColor: '#10b981' },
+
+  resetLink: { color: '#9ca3af', fontSize: '14px', marginTop: '32px', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' },
+  gameContainer: { width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' },
+  gameHeader: { marginBottom: '16px', color: '#4b5563', fontWeight: 'bold' },
+  card: { position: 'relative', width: '100%', height: '250px', cursor: 'pointer', perspective: '1000px' },
+  cardInner: (isFlipped) => ({ position: 'relative', width: '100%', height: '100%', textAlign: 'center', transition: 'transform 0.6s', transformStyle: 'preserve-3d', transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', borderRadius: '16px', backgroundColor: 'white' }),
+  cardFace: { position: 'absolute', width: '100%', height: '100%', backfaceVisibility: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderRadius: '16px' },
+  cardFaceBack: { transform: 'rotateY(180deg)', backgroundColor: '#f9fafb' },
+  cardText: { fontSize: '2.5rem', fontWeight: 'bold', color: '#1f2937', padding: '0 10px' },
+  cardSubtext: { fontSize: '0.875rem', color: '#9ca3af', textTransform: 'uppercase', marginBottom: '8px' },
+  hintText: { fontSize: '0.875rem', color: '#60a5fa', marginTop: '8px' },
+  controls: { display: 'flex', gap: '16px', marginTop: '32px', width: '100%' },
+  controlButton: (type) => ({ flex: 1, padding: '16px', borderRadius: '12px', fontWeight: 'bold', fontSize: '1.125rem', cursor: 'pointer', border: type === 'know' ? '1px solid #22c55e' : '1px solid #ef4444', backgroundColor: type === 'know' ? '#dcfce7' : '#fee2e2', color: type === 'know' ? '#16a34a' : '#dc2626' }),
+  exitButton: { marginTop: '24px', color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold' }
 };
 
 function App() {
-  // 1. טעינת נתונים חכמה + הוספת שדה סטטוס אוטומטית
   const [cards, setCards] = useState(() => {
     const saved = localStorage.getItem('flashcards-data');
-    if (saved) {
-      return JSON.parse(saved);
-    }
-    // אם זו פעם ראשונה - נוסיף לכל מילה סטטוס 'לא נלמד'
+    if (saved) return JSON.parse(saved);
     return initialWords.map(card => ({ ...card, status: 'unlearned' }));
   });
 
-  // משתנים למצב משחק
   const [sessionCards, setSessionCards] = useState([]); 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isPlayMode, setIsPlayMode] = useState(false);
   const [sessionTitle, setSessionTitle] = useState('');
 
-  // 2. שמירה אוטומטית בכל שינוי
   useEffect(() => {
     localStorage.setItem('flashcards-data', JSON.stringify(cards));
   }, [cards]);
 
-  // פונקציה להתחלת תרגול רגיל (ערבוב הכל)
-  const startStandardSession = () => {
-    const shuffled = [...cards].sort(() => 0.5 - Math.random());
-    setSessionCards(shuffled);
-    setCurrentIndex(0);
-    setIsFlipped(false);
-    setSessionTitle('תרגול כללי (מעורבב)');
-    setIsPlayMode(true);
-  };
+  // פונקציה חכמה שמתחילה סשן לפי סוג
+  const startSession = (type) => {
+    let filteredCards = [];
+    let title = '';
 
-  // 3. הפונקציה לתרגול 20 מילים קשות
-  const startHardSession = () => {
-    const unknownCards = cards.filter(card => card.status === 'dont_know');
-    
-    if (unknownCards.length === 0) {
-      alert("אין כרגע מילים שסימנת כ'לא יודע'. כל הכבוד!");
+    if (type === 'all') {
+      filteredCards = [...cards];
+      title = 'רנדומלי (הכל)';
+    } else if (type === 'unlearned') {
+      filteredCards = cards.filter(c => c.status === 'unlearned');
+      title = 'מילים חדשות';
+    } else if (type === 'dont_know') {
+      filteredCards = cards.filter(c => c.status === 'dont_know');
+      title = 'מילים קשות';
+    } else if (type === 'know') {
+      filteredCards = cards.filter(c => c.status === 'know');
+      title = 'חזרה על מילים ידועות';
+    }
+
+    if (filteredCards.length === 0) {
+      alert("אין כרגע כרטיסיות בקטגוריה זו!");
       return;
     }
 
-    const sessionBatch = unknownCards.slice(0, 20);
+    // מערבב את המילים המסוננות
+    const shuffled = filteredCards.sort(() => 0.5 - Math.random());
+    
+    // לוקח עד 20 מילים לסשן (כדי שיהיה קל לתרגל), למעט אם בחרנו הכל
+    const sessionBatch = type === 'all' ? shuffled : shuffled.slice(0, 20);
     
     setSessionCards(sessionBatch);
     setCurrentIndex(0);
     setIsFlipped(false);
-    setSessionTitle(`תרגול מילים קשות (${sessionBatch.length} מילים)`);
+    setSessionTitle(`${title} (${sessionBatch.length} מילים)`);
     setIsPlayMode(true);
   };
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
-  };
+  const handleFlip = () => setIsFlipped(!isFlipped);
 
   const handleVote = (status) => {
     const currentCardId = sessionCards[currentIndex].id;
 
-    // עדכון הרשימה הראשית
     setCards(prevCards => prevCards.map(card => 
       card.id === currentCardId ? { ...card, status: status } : card
     ));
 
-    // מעבר לקלף הבא
     if (currentIndex < sessionCards.length - 1) {
       setCurrentIndex(prev => prev + 1);
       setIsFlipped(false);
@@ -1016,7 +884,9 @@ function App() {
     }
   };
 
+  // חישוב כמות המילים בכל סטטוס
   const stats = {
+    unlearned: cards.filter(c => c.status === 'unlearned').length,
     known: cards.filter(c => c.status === 'know').length,
     unknown: cards.filter(c => c.status === 'dont_know').length,
     total: cards.length
@@ -1030,41 +900,49 @@ function App() {
         <div style={styles.dashboard}>
           
           <div style={styles.statsBox}>
-            <div style={styles.textGreen}>✅ יודע: {stats.known}</div>
+            <div style={styles.textOrange}>🆕 חדש: {stats.unlearned}</div>
             <div style={styles.textRed}>❌ לא יודע: {stats.unknown}</div>
-            <div style={styles.textGray}>סה"כ: {stats.total}</div>
+            <div style={styles.textGreen}>✅ יודע: {stats.known}</div>
           </div>
 
           <button 
-            onClick={startStandardSession}
-            style={styles.primaryButton}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#2563eb'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#3b82f6'}
+            onClick={() => startSession('all')}
+            style={{...styles.btnBase, ...styles.btnBlue}}
           >
-            התחל תרגול רגיל (מעורבב)
+            🎲 תרגול רנדומלי (כל ה-{stats.total})
           </button>
 
-          {stats.unknown > 0 && (
-            <button 
-              onClick={startHardSession}
-              style={styles.dangerButton}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#dc2626'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#ef4444'}
-            >
-              תרגל {Math.min(20, stats.unknown)} מילים שלא ידעתי
-            </button>
-          )}
+          <button 
+            onClick={() => startSession('unlearned')}
+            style={{...styles.btnBase, ...styles.btnOrange}}
+          >
+            🆕 מילים שעוד לא סימנתי ({stats.unlearned})
+          </button>
+
+          <button 
+            onClick={() => startSession('dont_know')}
+            style={{...styles.btnBase, ...styles.btnRed}}
+          >
+            🧠 מילים שאני לא יודע ({stats.unknown})
+          </button>
+
+          <button 
+            onClick={() => startSession('know')}
+            style={{...styles.btnBase, ...styles.btnGreen}}
+          >
+            ♻️ חזרה על מילים שאני יודע ({stats.known})
+          </button>
           
           <button 
             onClick={() => {
-                if(window.confirm('האם אתה בטוח? זה יאפס את כל ההתקדמות שלך.')) {
+                if(window.confirm('האם אתה בטוח? זה יאפס את כל ההתקדמות שלך (המיון של המילים יימחק).')) {
                     localStorage.removeItem('flashcards-data');
                     window.location.reload();
                 }
             }}
             style={styles.resetLink}
           >
-            איפוס נתונים
+            איפוס נתונים ומחיקת שמירה
           </button>
         </div>
       ) : (
@@ -1073,26 +951,19 @@ function App() {
             {sessionTitle} | קלף {currentIndex + 1} מתוך {sessionCards.length}
           </div>
 
-          {/* אזור הכרטיסייה */}
           <div style={styles.card} onClick={handleFlip}>
             <div style={styles.cardInner(isFlipped)}>
               
-              {/* צד קדמי */}
-              <div style={{...styles.cardFace, ...styles.cardFaceFront}}>
-                <span style={styles.cardSubtext}>
-                  גרמנית
-                </span>
+              <div style={styles.cardFace}>
+                <span style={styles.cardSubtext}>גרמנית</span>
                 <h2 style={styles.cardText}>
                   {sessionCards[currentIndex].front}
                 </h2>
                 <p style={styles.hintText}>(לחץ להפיכה)</p>
               </div>
 
-              {/* צד אחורי */}
               <div style={{...styles.cardFace, ...styles.cardFaceBack}}>
-                <span style={styles.cardSubtext}>
-                  תרגום
-                </span>
+                <span style={styles.cardSubtext}>תרגום</span>
                 <h2 style={styles.cardText}>
                   {sessionCards[currentIndex].back}
                 </h2>
@@ -1105,26 +976,19 @@ function App() {
             <button 
               onClick={() => handleVote('dont_know')}
               style={styles.controlButton('dont_know')}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#fecaca'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#fee2e2'}
             >
               ❌ לא ידעתי
             </button>
             <button 
               onClick={() => handleVote('know')}
               style={styles.controlButton('know')}
-              onMouseOver={(e) => e.target.style.backgroundColor = '#bbf7d0'}
-              onMouseOut={(e) => e.target.style.backgroundColor = '#dcfce7'}
             >
               ✅ ידעתי
             </button>
           </div>
           
-          <button 
-            onClick={() => setIsPlayMode(false)}
-            style={styles.exitButton}
-          >
-            צא מהסשן
+          <button onClick={() => setIsPlayMode(false)} style={styles.exitButton}>
+            🔙 צא מהסשן
           </button>
         </div>
       )}
